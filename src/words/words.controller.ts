@@ -1,5 +1,4 @@
-import { Controller, Get, Req, Res } from '@nestjs/common';
-import { Response } from 'express';
+import { Controller, Get, Param } from '@nestjs/common';
 import { WordsService } from './words.service';
 
 @Controller('words')
@@ -7,20 +6,20 @@ export class WordsController {
   constructor(private readonly wordsService: WordsService) {}
 
   @Get()
-  async getAll(@Res() response: Response) {
+  async getAll(): Promise<string[]> {
     const words = await this.wordsService.getWords();
-    return response.send(words);
+    return words;
   }
 
-  @Get('count')
-  async getByCount(@Req() request: Request, @Res() response: Response) {
+  @Get(':count')
+  async getByCount(@Param('count') count: number): Promise<string[]> {
     const words = await this.wordsService.getWords();
-    return response.send(words);
+    return words.slice(0, count);
   }
 
-  @Get('letter')
-  async getByLetter(@Req() request: Request, @Res() response: Response) {
+  @Get(':letter')
+  async getByLetter(@Param('letter') letter: string): Promise<string[]> {
     const words = await this.wordsService.getWords();
-    return response.send(words);
+    return words.filter((w) => w.startsWith(letter));
   }
 }
