@@ -11,13 +11,13 @@ export class WordsController {
     return words;
   }
 
-  @Get(':count')
+  @Get('count/:count')
   async getByCount(@Param('count') count: number): Promise<string[]> {
     const words = await this.wordsService.getWords();
     return words.slice(0, count);
   }
 
-  @Get(':letter')
+  @Get('letter/:letter')
   async getByLetter(@Param('letter') letter: string): Promise<string[]> {
     const words = await this.wordsService.getWords();
     return words.filter((w) => w.startsWith(letter));

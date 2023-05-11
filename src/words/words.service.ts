@@ -9,6 +9,6 @@ export class WordsService {
     const file = fs.readFileSync(filePath);
     const json = JSON.parse(file.toString());
 
-    return json.json();
+    return json;
   }
 }
