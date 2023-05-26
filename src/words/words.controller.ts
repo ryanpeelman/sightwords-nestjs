@@ -40,12 +40,12 @@ export class WordsController {
     return words;
   }
 
-  async getByCount(count: number, source: string[]): Promise<string[]> {
+  async getByCount(count: number, source?: string[]): Promise<string[]> {
     const words = source ?? (await this.wordsService.getWords());
     return words.slice(0, count);
   }
 
-  async getByLetter(letter: string, source: string[]): Promise<string[]> {
+  async getByLetter(letter: string, source?: string[]): Promise<string[]> {
     const words = source ?? (await this.wordsService.getWords());
     return words.filter((w) => w.startsWith(letter));
   }
