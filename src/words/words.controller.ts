@@ -6,7 +6,7 @@ import { WordsService } from './words.service';
 export class WordsController {
   constructor(private readonly wordsService: WordsService) {}
 
-  @Get()
+  @Get('/')
   @ApiOperation({
     summary:
       'Retrieve all sightwords; optionally constrained to those that start with a specified letter and/or a specified amount of words to return',
@@ -47,6 +47,10 @@ export class WordsController {
 
   async getByLetter(letter: string, source?: string[]): Promise<string[]> {
     const words = source ?? (await this.wordsService.getWords());
-    return words.filter((w) => w.startsWith(letter));
+    return words.filter(
+      (w) =>
+        w.startsWith(letter.toLowerCase()) ||
+        w.startsWith(letter.toUpperCase()),
+    );
   }
 }
